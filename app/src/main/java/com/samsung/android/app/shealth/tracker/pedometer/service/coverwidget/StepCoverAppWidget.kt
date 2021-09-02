@@ -12,6 +12,8 @@ import com.sec.android.app.shealth.R
 
 class StepCoverAppWidget: AppWidgetProvider() {
 
+    private val shealth = "com.sec.android.app.shealth"
+
     private val onClickTag = "OnClickTag"
 
     protected fun getPendingSelfIntent(context: Context?, action: String?): PendingIntent? {
@@ -23,7 +25,7 @@ class StepCoverAppWidget: AppWidgetProvider() {
     override fun onReceive(context: Context?, intent: Intent) {
         if (onClickTag.equals(intent.action)) {
             val intent = Intent()
-            intent.component = ComponentName("com.sec.android.app.shealth", "com.sec.android.app.shealth.AppLauncherService")
+            intent.component = ComponentName(shealth, "$shealth.AppLauncherService")
             context?.startService(intent)
         }
         else{

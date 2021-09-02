@@ -13,6 +13,7 @@ import org.mozilla.geckoview.GeckoSessionSettings
 import org.mozilla.geckoview.GeckoView
 
 class BrowserActivity : AppCompatActivity() {
+    private val defaultUrl = "https://forum.xda-developers.com/f/samsung-galaxy-z-flip-3.12351/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +44,7 @@ class BrowserActivity : AppCompatActivity() {
 
         val sharedPref = getSharedPreferences("com.carudibu.subuibrowser.PREFS", Context.MODE_PRIVATE)
 
-        geckoSession.loadUri(sharedPref.getString("starting_url", "https://reddit.com") ?: "https://reddit.com")
+        geckoSession.loadUri(sharedPref.getString("starting_url", defaultUrl) ?: defaultUrl)
 
         findViewById<Button>(R.id.back).setOnClickListener {
             geckoSession.goBack()

@@ -12,6 +12,7 @@ import android.widget.EditText
 import androidx.core.widget.doOnTextChanged
 
 class MainActivity : AppCompatActivity() {
+    private val defaultUrl = "https://forum.xda-developers.com/f/samsung-galaxy-z-flip-3.12351/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPref = getSharedPreferences("com.carudibu.subuibrowser.PREFS", Context.MODE_PRIVATE)
 
-        findViewById<EditText>(R.id.startingUrl).setText(sharedPref.getString("starting_url", "https://reddit.com") ?: "https://reddit.com")
+        findViewById<EditText>(R.id.startingUrl).setText(sharedPref.getString("starting_url", defaultUrl) ?: defaultUrl)
 
         findViewById<EditText>(R.id.startingUrl).doOnTextChanged { text, start, before, count ->
             with (sharedPref.edit()) {
@@ -29,8 +30,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.openBrowser).setOnClickListener {
-            val intent = Intent()
-            intent.component = ComponentName("com.sec.android.app.shealth","com.sec.android.app.shealth.BrowserActivity")
+            val intent = Intent(applicationContext, BrowserActivity::class.java)
             val options = ActivityOptions.makeBasic().setLaunchDisplayId(0)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
