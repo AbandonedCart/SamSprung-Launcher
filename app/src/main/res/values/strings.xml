@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SubUI-browser</string>
+    <string name="button_start_browser">Start SubUI-browser</string>
 </resources>

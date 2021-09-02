@@ -2,16 +2,17 @@
 <LinearLayout android:orientation="vertical" android:paddingBottom="4dp" android:layout_width="fill_parent" android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout android:orientation="horizontal" android:id="@+id/icon_text_linear_layout" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp">
+    <LinearLayout android:orientation="horizontal" android:id="@+id/icon_text_linear_layout" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:layout_marginBottom="16dp">
         <ImageView android:background="@mipmap/ic_launcher" android:layout_width="32dp" android:layout_height="32dp" android:layout_marginStart="24dp"/>
-        <TextView android:textSize="24dp" android:textColor="#fafafa" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/app_name" android:alpha="0.6" android:layout_marginStart="14dp"/>
+        <TextView android:textSize="24sp" android:textColor="#fafafa" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/app_name" android:alpha="0.6" android:layout_marginStart="14dp"/>
     </LinearLayout>
 
     <Button
         android:id="@+id/launch"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="Start SubUI-browser" />
+        android:textSize="24sp"
+        android:text="@string/button_start_browser" />
 </LinearLayout>
