@@ -1,0 +1,60 @@
+name: Android CI
+
+on:
+  repository_dispatch:
+    types: [ custom ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        repository: SamSprung/SamSprung
+        ref: custom
+        token: ${{ secrets.ORG_TOKEN }}
+    - name: set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    - name: Build with Gradle
+      run: ./gradlew assembleRelease
+
+    - uses: r0adkll/sign-android-release@v1
+      name: Sign app APK
+      # ID used to access action output
+      id: sign_app
+      with:
+        releaseDirectory: app/build/outputs/apk/release
+        signingKeyBase64: ${{ secrets.KEYSTORE }}
+        alias: ${{ secrets.KEY_ALIAS }}
+        keyStorePassword: ${{ secrets.STOREPASS }}
+        keyPassword: ${{ secrets.KEYPASS }}
+      env:
+        # override default build-tools version (29.0.3) -- optional
+        BUILD_TOOLS_VERSION: "30.0.2"
+
+    - name: Retrieve commit short hash
+      run: |
+         GIT_HASH=$(git rev-parse --short HEAD)
+         echo "GIT_HASH=${GIT_HASH}" >> $GITHUB_ENV
+
+    # Example use of `signedReleaseFile` output -- not needed
+    - uses: actions/upload-artifact@v2
+      with:
+        name: SamSprung-${{ env.GIT_HASH }}
+        path: ${{steps.sign_app.outputs.signedReleaseFile}}
+
+    - uses: marvinpinto/action-automatic-releases@v1.2.1
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: ${{ github.event_name == 'pull_request' }}
+        title: SamSprung-${{ env.GIT_HASH }}
+        files: ${{steps.sign_app.outputs.signedReleaseFile}}

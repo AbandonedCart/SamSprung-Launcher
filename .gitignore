@@ -1,0 +1,15 @@
+.DS_Store
+*.orig
+
+local.properties
+keystore.properties
+*.iml
+
+.cxx
+.externalNativeBuild
+.gradle
+.idea
+
+captures
+build
+release
